@@ -1,0 +1,3 @@
+paths:
+  - remote: "/home1/"
+    local: "/home2/"
