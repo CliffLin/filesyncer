@@ -18,6 +18,7 @@ type Syncer struct {
 }
 
 func (s *Syncer) Run() {
+	log.Println("Start ", s.LocalPath, s.RemotePath)
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Println(err)

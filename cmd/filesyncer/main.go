@@ -33,10 +33,10 @@ var rootCmd = &cobra.Command{
 		}
 
 		for _, path := range cfg.Paths {
-			go func() {
-				worker := syncer.Syncer{path.Remote, path.Local}
+			go func(remote, local string) {
+				worker := syncer.Syncer{remote, local}
 				worker.Run()
-			}()
+			}(path.Remote, path.Local)
 		}
 		<-make(chan struct{})
 	},
