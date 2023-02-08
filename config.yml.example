@@ -1,3 +1,10 @@
 paths:
-  - remote: "/home1/"
+  - type: Periodic
+    remote: "/home1/"
+    local: "/home2/"
+    config:
+      interval: 10
+
+  - type: RealTime
+    remote: "/home1/"
     local: "/home2/"

@@ -1,6 +1,6 @@
 package filemanager
 
-type filemanagerInterface interface {
+type FileManagerInterface interface {
 	OnCreate(string, string) error
 	OnWrite(string, string) error
 	OnRemove(string, string) error

@@ -1,12 +1,12 @@
 package main
 
 import (
+	"filesyncer/internal/syncer"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-
-	"filesyncer/internal/syncer"
 )
 
 type config struct {
@@ -14,8 +14,10 @@ type config struct {
 }
 
 type path struct {
-	Remote string `mapstructure:"remote"`
-	Local  string `mapstructure:"local"`
+	Remote string      `mapstructure:"remote"`
+	Local  string      `mapstructure:"local"`
+	Type   string      `mapstructure:"type"`
+	Config interface{} `mapstructure:"config"`
 }
 
 var cfg config
@@ -33,10 +35,14 @@ var rootCmd = &cobra.Command{
 		}
 
 		for _, path := range cfg.Paths {
-			go func(remote, local string) {
-				worker := syncer.Syncer{remote, local}
-				worker.Run()
-			}(path.Remote, path.Local)
+			go func(remote, local, syncer_type string, config interface{}) {
+				syncer, err := syncer.GetSyncer(syncer_type, local, remote, config)
+				if err != nil {
+					log.Println(err)
+					return
+				}
+				syncer.Run()
+			}(path.Remote, path.Local, path.Type, path.Config)
 		}
 		<-make(chan struct{})
 	},

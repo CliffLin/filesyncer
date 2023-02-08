@@ -79,7 +79,7 @@ func RelativelyPath(root, path string) string {
 	return path[len(root):]
 }
 
-func GetManager(path string) (filemanagerInterface, error) {
+func GetManager(path string) (FileManagerInterface, error) {
 	info, err := os.Stat(path)
 	if err != nil {
 		return nil, err

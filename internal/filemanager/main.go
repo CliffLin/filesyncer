@@ -15,7 +15,7 @@ func EventProcess(event fsnotify.Event, localRoot, remoteRoot string, watcher *f
 	relative := RelativelyPath(localRoot, event.Name)
 	remotePath := fmt.Sprintf("%s%s", remoteRoot, relative)
 
-	var manager filemanagerInterface
+	var manager FileManagerInterface
 	switch event.Op {
 	case fsnotify.Create, fsnotify.Write, fsnotify.Chmod:
 		var err error
